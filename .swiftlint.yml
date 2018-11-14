@@ -1,0 +1,4 @@
+indentation: tabs
+
+excluded:
+  - Tests/*/XCTestManifests.swift

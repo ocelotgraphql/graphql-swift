@@ -27,6 +27,13 @@ extension Lexer {
 		/// A String token e.g. holds its
 		/// characters.
 		public var value: String?
+
+		init(ofKind kind: Kind, startingAt start: Int, endingAt end: Int, holding value: String? = nil) {
+			self.kind = kind
+			self.start = start
+			self.end = end
+			self.value = value
+		}
 	}
 }
 

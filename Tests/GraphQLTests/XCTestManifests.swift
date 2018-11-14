@@ -21,6 +21,8 @@ extension LexerPunctuationTokenTestCase {
         ("testItLexesOpeningBrackets", testItLexesOpeningBrackets),
         ("testItLexesOpeningParanthesis", testItLexesOpeningParanthesis),
         ("testItLexesPipes", testItLexesPipes),
+        ("testItLexesSpreads", testItLexesSpreads),
+        ("testItThrowsAnErrorWhenLexingMoreOrLessThanThreeSuccessiveDots", testItThrowsAnErrorWhenLexingMoreOrLessThanThreeSuccessiveDots),
     ]
 }
 

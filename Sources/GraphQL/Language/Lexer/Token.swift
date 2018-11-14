@@ -62,3 +62,5 @@ extension Lexer.Token {
 		case closingBrace
 	}
 }
+
+extension Lexer.Token: Equatable {}

@@ -1,6 +1,20 @@
 import XCTest
 @testable import GraphQL
 
+func XCTAssertLexing(_ source: String, spitsOut tokens: [Lexer.Token]) {
+	do {
+		var lexer = try Lexer(lexing: source)
+		var lexedTokens = [Lexer.Token]()
+		while let token = try lexer.advance() {
+			lexedTokens.append(token)
+		}
+
+		XCTAssertEqual(lexedTokens, tokens)
+	} catch {
+		XCTFail("Expected to lex \(tokens.count) tokens, but got error instead: \(error)")
+	}
+}
+
 func XCTAssertLexing(_ source: String, throwsErrorStartingAt start: Int, end: Int? = nil) {
 	do {
 		var lexer = try Lexer(lexing: source)

@@ -26,7 +26,27 @@ public struct Lexer {
 		if let punctuationTokenKind = punctuationTokens[unicodeScalarCodePoint] {
 			return consumePunctuationToken(ofKind: punctuationTokenKind, startingAt: offset)
 		} else {
-			throw GraphQLError(startingAt: offset, describedBy: "Invalid character: \"\(character)\"")
+			switch unicodeScalarCodePoint {
+			case 9, 10, 13, 32:
+				return consumeWhitespace(startingAt: offset)
+			default:
+				throw GraphQLError(startingAt: offset, describedBy: "Invalid character: \"\(character)\"")
+			}
+		}
+	}
+
+	private static func consumeWhitespace(startingAt offset: Int) -> Cont {
+		return Cont { substring in
+			var numberOfWhitespaces = 1
+			while let nextCharacter = substring.popFirst() {
+				if [9, 10, 13, 32].contains(nextCharacter.unicodeScalarCodePoint) {
+					numberOfWhitespaces += 1
+					continue
+				} else {
+					return try consume(nextCharacter, startingAt: offset + numberOfWhitespaces).run(&substring)
+				}
+			}
+			return nil
 		}
 	}
 

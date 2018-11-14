@@ -33,6 +33,8 @@ public struct Lexer {
 				return consumeString(startingAt: offset)
 			case 35:
 				return consumeComment(startingAt: offset)
+			case 45, 48...57:
+				return consumeNumber(startingWith: character, at: offset)
 			default:
 				throw GraphQLError(startingAt: offset, describedBy: "Invalid character: \"\(character)\"")
 			}
@@ -118,6 +120,41 @@ public struct Lexer {
 
 			let end = offset + hashLength + value.count
 			let token = Token(ofKind: .comment, startingAt: offset, endingAt: end, holding: value)
+			return (token, try startState(offsetBy: end))
+		}
+	}
+
+	private static func consumeNumber(startingWith firstCharacter: Character, at offset: Int) -> Cont {
+		return Cont { substring in
+			var value = String(firstCharacter)
+			var isFloat = false
+
+			while let nextCharacter = substring.popFirst() {
+				let unicodeScalarCodePoint = nextCharacter.unicodeScalarCodePoint
+				if (48...57).contains(unicodeScalarCodePoint) {
+					value += String(nextCharacter)
+				} else if unicodeScalarCodePoint == 46 {
+					isFloat = true
+					value += String(nextCharacter)
+				} else {
+					let end = offset + value.count
+					let token = Token(
+						ofKind: isFloat ? .float : .int,
+						startingAt: offset,
+						endingAt: end,
+						holding: value
+					)
+					return (token, try consume(nextCharacter, startingAt: end))
+				}
+			}
+
+			let end = offset + value.count
+			let token = Token(
+				ofKind: isFloat ? .float : .int,
+				startingAt: offset,
+				endingAt: end,
+				holding: value
+			)
 			return (token, try startState(offsetBy: end))
 		}
 	}

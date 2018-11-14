@@ -13,6 +13,18 @@ extension LexerCommentTestCase {
     ]
 }
 
+extension LexerNumberTestCase {
+    static let __allTests = [
+        ("testItContinuesLexingAfterLexingFloats", testItContinuesLexingAfterLexingFloats),
+        ("testItContinuesLexingAfterLexingIntegers", testItContinuesLexingAfterLexingIntegers),
+        ("testItLexesFloats", testItLexesFloats),
+        ("testItLexesMultiBitIntegers", testItLexesMultiBitIntegers),
+        ("testItLexesNegativeFloats", testItLexesNegativeFloats),
+        ("testItLexesNegativeIntegers", testItLexesNegativeIntegers),
+        ("testItLexesSingleBitIntegers", testItLexesSingleBitIntegers),
+    ]
+}
+
 extension LexerPunctuationTokenTestCase {
     static let __allTests = [
         ("testItLexesAmpersands", testItLexesAmpersands),
@@ -61,6 +73,7 @@ public func __allTests() -> [XCTestCaseEntry] {
     return [
         testCase(GraphQLErrorTestCase.__allTests),
         testCase(LexerCommentTestCase.__allTests),
+        testCase(LexerNumberTestCase.__allTests),
         testCase(LexerPunctuationTokenTestCase.__allTests),
         testCase(LexerStringTestCase.__allTests),
         testCase(LexerWhitespaceTestCase.__allTests),

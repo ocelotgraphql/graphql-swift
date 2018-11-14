@@ -5,7 +5,7 @@
 ///
 /// - warning: This is a *proof-of-concept* implementation
 /// which **lacks support for lexing block strings,
-/// espace sequences, and more complex numbers**.
+/// escape sequences, and more complex numbers**.
 public struct Lexer {
 	private var remainder: Substring
 	private var cont: Cont

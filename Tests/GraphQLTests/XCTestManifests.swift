@@ -1,15 +1,15 @@
 import XCTest
 
-extension GraphQLTests {
+extension GraphQLErrorTestCase {
     static let __allTests = [
-        ("testExample", testExample),
+        ("testItReturnsItsMessageAsDescription", testItReturnsItsMessageAsDescription),
     ]
 }
 
 #if !os(macOS)
 public func __allTests() -> [XCTestCaseEntry] {
     return [
-        testCase(GraphQLTests.__allTests),
+        testCase(GraphQLErrorTestCase.__allTests),
     ]
 }
 #endif

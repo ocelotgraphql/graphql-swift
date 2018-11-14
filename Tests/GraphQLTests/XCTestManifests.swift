@@ -26,11 +26,26 @@ extension LexerPunctuationTokenTestCase {
     ]
 }
 
+extension LexerWhitespaceTestCase {
+    static let __allTests = [
+        ("testItIgnoresCarriageReturns", testItIgnoresCarriageReturns),
+        ("testItIgnoresNewLines", testItIgnoresNewLines),
+        ("testItIgnoresSpaces", testItIgnoresSpaces),
+        ("testItIgnoresSuccessiveWhitespaces", testItIgnoresSuccessiveWhitespaces),
+        ("testItIgnoresTabs", testItIgnoresTabs),
+        ("testItStopsIgnoringCarriageReturnsOnceANonWhitespaceCharacterWasFound", testItStopsIgnoringCarriageReturnsOnceANonWhitespaceCharacterWasFound),
+        ("testItStopsIgnoringNewLinesOnceANonWhitespaceCharacterWasFound", testItStopsIgnoringNewLinesOnceANonWhitespaceCharacterWasFound),
+        ("testItStopsIgnoringSpacesOnceANonWhitespaceCharacterWasFound", testItStopsIgnoringSpacesOnceANonWhitespaceCharacterWasFound),
+        ("testItStopsIgnoringTabsOnceANonWhitespaceCharacterWasFound", testItStopsIgnoringTabsOnceANonWhitespaceCharacterWasFound),
+    ]
+}
+
 #if !os(macOS)
 public func __allTests() -> [XCTestCaseEntry] {
     return [
         testCase(GraphQLErrorTestCase.__allTests),
         testCase(LexerPunctuationTokenTestCase.__allTests),
+        testCase(LexerWhitespaceTestCase.__allTests),
     ]
 }
 #endif

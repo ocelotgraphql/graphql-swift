@@ -31,6 +31,8 @@ public struct Lexer {
 				return consumeWhitespace(startingAt: offset)
 			case 34:
 				return consumeString(startingAt: offset)
+			case 35:
+				return consumeComment(startingAt: offset)
 			default:
 				throw GraphQLError(startingAt: offset, describedBy: "Invalid character: \"\(character)\"")
 			}
@@ -97,6 +99,29 @@ public struct Lexer {
 		}
 	}
 
+	private static func consumeComment(startingAt offset: Int) -> Cont {
+		return Cont { substring in
+			var value = ""
+			let hashLength = 1
+
+			while let nextCharacter = substring.popFirst() {
+				let unicodeScalarCodePoint = nextCharacter.unicodeScalarCodePoint
+				if unicodeScalarCodePoint > 0x001F || unicodeScalarCodePoint == 0x0009 {
+					value += String(nextCharacter)
+					continue
+				} else {
+					let end = offset + hashLength + value.count
+					let token = Token(ofKind: .comment, startingAt: offset, endingAt: end, holding: value)
+					return (token, try consume(nextCharacter, startingAt: end))
+				}
+			}
+
+			let end = offset + hashLength + value.count
+			let token = Token(ofKind: .comment, startingAt: offset, endingAt: end, holding: value)
+			return (token, try startState(offsetBy: end))
+		}
+	}
+
 	private static func consumeSpread(startingAt offset: Int) -> Cont {
 		return Cont { substring in
 			var numberOfDots = 1
@@ -108,7 +133,7 @@ public struct Lexer {
 				throw GraphQLError(startingAt: offset, describedBy: "Invalid character, did you mean to use ... instead?")
 			}
 
-			let end = offset + 3
+			let end = offset + numberOfDots
 			let token = Token(ofKind: .spread, startingAt: offset, endingAt: end)
 			return (token, try startState(offsetBy: end))
 		}

@@ -6,6 +6,13 @@ extension GraphQLErrorTestCase {
     ]
 }
 
+extension LexerCommentTestCase {
+    static let __allTests = [
+        ("testItLexesComments", testItLexesComments),
+        ("testItStopsLexingCommentsOnLineBreaks", testItStopsLexingCommentsOnLineBreaks),
+    ]
+}
+
 extension LexerPunctuationTokenTestCase {
     static let __allTests = [
         ("testItLexesAmpersands", testItLexesAmpersands),
@@ -23,6 +30,15 @@ extension LexerPunctuationTokenTestCase {
         ("testItLexesPipes", testItLexesPipes),
         ("testItLexesSpreads", testItLexesSpreads),
         ("testItThrowsAnErrorWhenLexingMoreOrLessThanThreeSuccessiveDots", testItThrowsAnErrorWhenLexingMoreOrLessThanThreeSuccessiveDots),
+    ]
+}
+
+extension LexerStringTestCase {
+    static let __allTests = [
+        ("testItLexesStrings", testItLexesStrings),
+        ("testItLexesStringsWithoutRemovingWhitespace", testItLexesStringsWithoutRemovingWhitespace),
+        ("testItThrowsAnErrorIfAStringContainsInvalidCharacters", testItThrowsAnErrorIfAStringContainsInvalidCharacters),
+        ("testItThrowsAnErrorIfAStringIsNotTerminated", testItThrowsAnErrorIfAStringIsNotTerminated),
     ]
 }
 
@@ -44,7 +60,9 @@ extension LexerWhitespaceTestCase {
 public func __allTests() -> [XCTestCaseEntry] {
     return [
         testCase(GraphQLErrorTestCase.__allTests),
+        testCase(LexerCommentTestCase.__allTests),
         testCase(LexerPunctuationTokenTestCase.__allTests),
+        testCase(LexerStringTestCase.__allTests),
         testCase(LexerWhitespaceTestCase.__allTests),
     ]
 }

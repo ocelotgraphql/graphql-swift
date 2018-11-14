@@ -179,7 +179,7 @@ public struct Lexer {
 	private static func consumeSpread(startingAt offset: Int) -> Cont {
 		return Cont { substring in
 			var numberOfDots = 1
-			while let nextCharacter = substring.popFirst(), nextCharacter.unicodeScalarCodePoint == 46 {
+			while numberOfDots < 3, let nextCharacter = substring.popFirst(), nextCharacter.unicodeScalarCodePoint == 46 {
 				numberOfDots += 1
 			}
 

@@ -27,7 +27,6 @@ final class LexerPunctuationTokenTestCase: XCTestCase {
 	}
 
 	func testItThrowsAnErrorWhenLexingMoreOrLessThanThreeSuccessiveDots() {
-		XCTAssertLexing("....", throwsErrorStartingAt: 0)
 		XCTAssertLexing("..", throwsErrorStartingAt: 0)
 	}
 

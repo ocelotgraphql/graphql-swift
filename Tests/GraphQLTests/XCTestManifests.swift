@@ -61,6 +61,12 @@ extension LexerStringTestCase {
     ]
 }
 
+extension LexerTestCase {
+    static let __allTests = [
+        ("testItLexesAComplexQuery", testItLexesAComplexQuery),
+    ]
+}
+
 extension LexerWhitespaceTestCase {
     static let __allTests = [
         ("testItIgnoresCarriageReturns", testItIgnoresCarriageReturns),
@@ -84,6 +90,7 @@ public func __allTests() -> [XCTestCaseEntry] {
         testCase(LexerNumberTestCase.__allTests),
         testCase(LexerPunctuationTokenTestCase.__allTests),
         testCase(LexerStringTestCase.__allTests),
+        testCase(LexerTestCase.__allTests),
         testCase(LexerWhitespaceTestCase.__allTests),
     ]
 }

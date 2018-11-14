@@ -35,6 +35,8 @@ public struct Lexer {
 				return consumeComment(startingAt: offset)
 			case 45, 48...57:
 				return consumeNumber(startingWith: character, at: offset)
+			case 65...90, 95, 97...122:
+				return consumeName(startingWith: character, at: offset)
 			default:
 				throw GraphQLError(startingAt: offset, describedBy: "Invalid character: \"\(character)\"")
 			}
@@ -104,7 +106,14 @@ public struct Lexer {
 	private static func consumeComment(startingAt offset: Int) -> Cont {
 		return Cont { substring in
 			var value = ""
-			let hashLength = 1
+
+			var end: Int {
+				return offset + 1 + value.count
+			}
+
+			var token: Token {
+				return Token(ofKind: .comment, startingAt: offset, endingAt: end, holding: value)
+			}
 
 			while let nextCharacter = substring.popFirst() {
 				let unicodeScalarCodePoint = nextCharacter.unicodeScalarCodePoint
@@ -112,14 +121,10 @@ public struct Lexer {
 					value += String(nextCharacter)
 					continue
 				} else {
-					let end = offset + hashLength + value.count
-					let token = Token(ofKind: .comment, startingAt: offset, endingAt: end, holding: value)
 					return (token, try consume(nextCharacter, startingAt: end))
 				}
 			}
 
-			let end = offset + hashLength + value.count
-			let token = Token(ofKind: .comment, startingAt: offset, endingAt: end, holding: value)
 			return (token, try startState(offsetBy: end))
 		}
 	}
@@ -129,6 +134,14 @@ public struct Lexer {
 			var value = String(firstCharacter)
 			var isFloat = false
 
+			var end: Int {
+				return offset + value.count
+			}
+
+			var token: Token {
+				return Token(ofKind: isFloat ? .float : .int, startingAt: offset, endingAt: end, holding: value)
+			}
+
 			while let nextCharacter = substring.popFirst() {
 				let unicodeScalarCodePoint = nextCharacter.unicodeScalarCodePoint
 				if (48...57).contains(unicodeScalarCodePoint) {
@@ -137,24 +150,10 @@ public struct Lexer {
 					isFloat = true
 					value += String(nextCharacter)
 				} else {
-					let end = offset + value.count
-					let token = Token(
-						ofKind: isFloat ? .float : .int,
-						startingAt: offset,
-						endingAt: end,
-						holding: value
-					)
 					return (token, try consume(nextCharacter, startingAt: end))
 				}
 			}
 
-			let end = offset + value.count
-			let token = Token(
-				ofKind: isFloat ? .float : .int,
-				startingAt: offset,
-				endingAt: end,
-				holding: value
-			)
 			return (token, try startState(offsetBy: end))
 		}
 	}
@@ -172,6 +171,31 @@ public struct Lexer {
 
 			let end = offset + numberOfDots
 			let token = Token(ofKind: .spread, startingAt: offset, endingAt: end)
+			return (token, try startState(offsetBy: end))
+		}
+	}
+
+	private static func consumeName(startingWith firstCharacter: Character, at offset: Int) -> Cont {
+		return Cont { substring in
+			var value = String(firstCharacter)
+
+			var end: Int {
+				return offset + value.count
+			}
+
+			var token: Token {
+				return Token(ofKind: .name, startingAt: offset, endingAt: end, holding: value)
+			}
+
+			while let nextCharacter = substring.popFirst() {
+				switch nextCharacter.unicodeScalarCodePoint {
+				case 65...90, 95, 97...122:
+					value += String(nextCharacter)
+				default:
+					return (token, try consume(nextCharacter, startingAt: end))
+				}
+			}
+
 			return (token, try startState(offsetBy: end))
 		}
 	}

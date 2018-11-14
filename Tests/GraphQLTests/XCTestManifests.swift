@@ -13,6 +13,13 @@ extension LexerCommentTestCase {
     ]
 }
 
+extension LexerNameTestCase {
+    static let __allTests = [
+        ("testItLexesNames", testItLexesNames),
+        ("testItStopLexingNamesWhenAnotherTokenOccurs", testItStopLexingNamesWhenAnotherTokenOccurs),
+    ]
+}
+
 extension LexerNumberTestCase {
     static let __allTests = [
         ("testItContinuesLexingAfterLexingFloats", testItContinuesLexingAfterLexingFloats),
@@ -73,6 +80,7 @@ public func __allTests() -> [XCTestCaseEntry] {
     return [
         testCase(GraphQLErrorTestCase.__allTests),
         testCase(LexerCommentTestCase.__allTests),
+        testCase(LexerNameTestCase.__allTests),
         testCase(LexerNumberTestCase.__allTests),
         testCase(LexerPunctuationTokenTestCase.__allTests),
         testCase(LexerStringTestCase.__allTests),

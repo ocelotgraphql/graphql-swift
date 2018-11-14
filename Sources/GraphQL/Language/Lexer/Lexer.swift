@@ -29,6 +29,8 @@ public struct Lexer {
 			switch unicodeScalarCodePoint {
 			case 9, 10, 13, 32:
 				return consumeWhitespace(startingAt: offset)
+			case 34:
+				return consumeString(startingAt: offset)
 			default:
 				throw GraphQLError(startingAt: offset, describedBy: "Invalid character: \"\(character)\"")
 			}
@@ -58,6 +60,41 @@ public struct Lexer {
 		}
 
 		return consumeSpread(startingAt: offset)
+	}
+
+	private static func consumeString(startingAt offset: Int) -> Cont {
+		return Cont { substring in
+			var value = ""
+			var lastCharacter: Character?
+
+			while let nextCharacter = substring.popFirst() {
+				let unicodeScalarCodePoint = nextCharacter.unicodeScalarCodePoint
+
+				// Neither LineTerminator nor closing quote
+				guard unicodeScalarCodePoint != 0x000A, unicodeScalarCodePoint != 0x000D, unicodeScalarCodePoint != 34 else {
+					lastCharacter = nextCharacter
+					break
+				}
+
+				if unicodeScalarCodePoint < 0x0020 && unicodeScalarCodePoint != 0x009 {
+					throw GraphQLError(startingAt: offset + value.count, describedBy: "Invalid character \"\(nextCharacter)\"")
+				}
+
+				value += String(nextCharacter)
+			}
+
+			let quoteLength = 1
+
+			guard lastCharacter?.unicodeScalarCodePoint == 34 else {
+				throw GraphQLError(startingAt: offset, describedBy: "Unterminated String")
+			}
+
+			let end = offset + quoteLength + value.count
+			return (
+				Token(ofKind: .string, startingAt: offset, endingAt: end + quoteLength, holding: value),
+				try startState(offsetBy: end + quoteLength)
+			)
+		}
 	}
 
 	private static func consumeSpread(startingAt offset: Int) -> Cont {

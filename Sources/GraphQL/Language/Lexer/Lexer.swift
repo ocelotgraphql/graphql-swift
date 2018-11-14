@@ -1,13 +1,31 @@
-/// [To be implemented]
+/// A Lexer is a stateful stream generator in that every time
+/// it is advanced, it returns the next token in the source.
+/// Assuming the source lexes, a call to `advance`
+/// will repeatedly return `nil`.
+///
+/// - warning: This is a *proof-of-concept* implementation
+/// which **lacks support for lexing block strings,
+/// espace sequences, and more complex numbers**.
 public struct Lexer {
 	private var remainder: Substring
 	private var cont: Cont
 
+	/// Creates a new `Lexer` lexing the given source.
+	/// To start retrieving `Token`s you have to call
+	/// `advance` until it returns `nil`.
+	///
+	/// - Parameter source: The `String` to be lexed.
+	/// - Throws: Different `GraphQLError`s with details about the failure.
 	public init(lexing source: String) throws {
 		remainder = source[...]
 		cont = try Lexer.startState()
 	}
 
+	/// Advances the lexer by one, which either results in a new `Token`,
+	/// or `nil` if the new position is past the end of the source.
+	///
+	/// - Returns: The new `Token`, or nil if the new position is past the end of the source.
+	/// - Throws: Different `GraphQLError`s with details about the failure.
 	public mutating func advance() throws -> Token? {
 		guard let (token, cont) = try cont.run(&remainder) else { return nil }
 		self.cont = cont

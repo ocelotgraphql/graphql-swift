@@ -22,18 +22,37 @@ public struct Lexer {
 	}
 
 	private static func consume(_ character: Character, startingAt offset: Int) throws -> Cont {
-		switch character.unicodeScalarCodePoint {
-		case 33:
-			return consumePunctuationToken(ofKind: .bang, startingAt: offset)
-		default:
+		let unicodeScalarCodePoint = character.unicodeScalarCodePoint
+		if let punctuationTokenKind = punctuationTokens[unicodeScalarCodePoint] {
+			return consumePunctuationToken(ofKind: punctuationTokenKind, startingAt: offset)
+		} else {
 			throw GraphQLError(startingAt: offset, describedBy: "Invalid character: \"\(character)\"")
 		}
 	}
 
 	private static func consumePunctuationToken(ofKind kind: Token.Kind, startingAt offset: Int) -> Cont {
-		return Cont { _ in
+		guard kind == .spread else {
 			let end = offset + 1
 			let token = Token(ofKind: kind, startingAt: offset, endingAt: end)
+			return Cont { _ in (token, try startState(offsetBy: end)) }
+		}
+
+		return consumeSpread(startingAt: offset)
+	}
+
+	private static func consumeSpread(startingAt offset: Int) -> Cont {
+		return Cont { substring in
+			var numberOfDots = 1
+			while let nextCharacter = substring.popFirst(), nextCharacter.unicodeScalarCodePoint == 46 {
+				numberOfDots += 1
+			}
+
+			guard numberOfDots == 3 else {
+				throw GraphQLError(startingAt: offset, describedBy: "Invalid character, did you mean to use ... instead?")
+			}
+
+			let end = offset + 3
+			let token = Token(ofKind: .spread, startingAt: offset, endingAt: end)
 			return (token, try startState(offsetBy: end))
 		}
 	}
@@ -44,3 +63,20 @@ extension Lexer {
 		let run: (inout Substring) throws -> (Token, Cont)?
 	}
 }
+
+private let punctuationTokens: [UInt32: Lexer.Token.Kind] = [
+	33: .bang,
+	36: .dollar,
+	38: .ampersand,
+	40: .openingParenthesis,
+	41: .closingParanthesis,
+	46: .spread,
+	58: .colon,
+	61: .equals,
+	64: .at,
+	91: .openingBracket,
+	93: .closingBracket,
+	123: .openingBrace,
+	124: .pipe,
+	125: .closingBrace
+]

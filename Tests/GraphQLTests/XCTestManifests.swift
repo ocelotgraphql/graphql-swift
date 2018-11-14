@@ -8,7 +8,19 @@ extension GraphQLErrorTestCase {
 
 extension LexerPunctuationTokenTestCase {
     static let __allTests = [
+        ("testItLexesAmpersands", testItLexesAmpersands),
+        ("testItLexesAts", testItLexesAts),
         ("testItLexesBangs", testItLexesBangs),
+        ("testItLexesClosingBraces", testItLexesClosingBraces),
+        ("testItLexesClosingBrackets", testItLexesClosingBrackets),
+        ("testItLexesClosingParanthesis", testItLexesClosingParanthesis),
+        ("testItLexesColons", testItLexesColons),
+        ("testItLexesDollars", testItLexesDollars),
+        ("testItLexesEquals", testItLexesEquals),
+        ("testItLexesOpeningBraces", testItLexesOpeningBraces),
+        ("testItLexesOpeningBrackets", testItLexesOpeningBrackets),
+        ("testItLexesOpeningParanthesis", testItLexesOpeningParanthesis),
+        ("testItLexesPipes", testItLexesPipes),
     ]
 }
 

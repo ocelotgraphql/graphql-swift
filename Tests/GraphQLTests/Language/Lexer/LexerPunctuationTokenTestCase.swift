@@ -14,12 +14,12 @@ final class LexerPunctuationTokenTestCase: XCTestCase {
 		XCTAssertLexing("&", spitsOutPunctuationTokenOfKind: .ampersand)
 	}
 
-	func testItLexesOpeningParanthesis() {
+	func testItLexesOpeningParenthesis() {
 		XCTAssertLexing("(", spitsOutPunctuationTokenOfKind: .openingParenthesis)
 	}
 
-	func testItLexesClosingParanthesis() {
-		XCTAssertLexing(")", spitsOutPunctuationTokenOfKind: .closingParanthesis)
+	func testItLexesClosingParenthesis() {
+		XCTAssertLexing(")", spitsOutPunctuationTokenOfKind: .closingParenthesis)
 	}
 
 	func testItLexesSpreads() {

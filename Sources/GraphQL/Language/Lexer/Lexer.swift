@@ -230,7 +230,7 @@ private let punctuationTokens: [UInt32: Lexer.Token.Kind] = [
 	36: .dollar,
 	38: .ampersand,
 	40: .openingParenthesis,
-	41: .closingParanthesis,
+	41: .closingParenthesis,
 	46: .spread,
 	58: .colon,
 	61: .equals,

@@ -35,7 +35,7 @@ final class LexerNumberTestCase: XCTestCase {
 
 		XCTAssertLexing("\(intString))", spitsOut: [
 			Lexer.Token(ofKind: .int, startingAt: 0, endingAt: 1, holding: intString),
-			Lexer.Token(ofKind: .closingParanthesis, startingAt: 1, endingAt: 2)
+			Lexer.Token(ofKind: .closingParenthesis, startingAt: 1, endingAt: 2)
 		])
 	}
 
@@ -60,7 +60,7 @@ final class LexerNumberTestCase: XCTestCase {
 
 		XCTAssertLexing("\(floatString))", spitsOut: [
 			Lexer.Token(ofKind: .float, startingAt: 0, endingAt: floatString.count, holding: floatString),
-			Lexer.Token(ofKind: .closingParanthesis, startingAt: floatString.count, endingAt: floatString.count + 1)
+			Lexer.Token(ofKind: .closingParenthesis, startingAt: floatString.count, endingAt: floatString.count + 1)
 		])
 	}
 }

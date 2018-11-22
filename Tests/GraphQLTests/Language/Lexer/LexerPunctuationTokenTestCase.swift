@@ -19,7 +19,7 @@ final class LexerPunctuationTokenTestCase: XCTestCase {
 	}
 
 	func testItLexesClosingParanthesis() {
-		XCTAssertLexing(")", spitsOutPunctuationTokenOfKind: .closingParanthesis)
+		XCTAssertLexing(")", spitsOutPunctuationTokenOfKind: .closingParenthesis)
 	}
 
 	func testItLexesSpreads() {

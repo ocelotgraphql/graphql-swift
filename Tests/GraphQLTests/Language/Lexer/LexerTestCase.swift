@@ -34,7 +34,7 @@ final class LexerTestCase: XCTestCase {
 			Lexer.Token(ofKind: GraphQL.Lexer.Token.Kind.name, startingAt: 39, endingAt: 44, holding: "first"),
 			Lexer.Token(ofKind: GraphQL.Lexer.Token.Kind.colon, startingAt: 44, endingAt: 45),
 			Lexer.Token(ofKind: GraphQL.Lexer.Token.Kind.int, startingAt: 46, endingAt: 49, holding: "100"),
-			Lexer.Token(ofKind: GraphQL.Lexer.Token.Kind.closingParanthesis, startingAt: 49, endingAt: 50),
+			Lexer.Token(ofKind: GraphQL.Lexer.Token.Kind.closingParenthesis, startingAt: 49, endingAt: 50),
 			Lexer.Token(ofKind: GraphQL.Lexer.Token.Kind.openingBrace, startingAt: 51, endingAt: 52),
 			Lexer.Token(ofKind: GraphQL.Lexer.Token.Kind.name, startingAt: 56, endingAt: 61, holding: "edges"),
 			Lexer.Token(ofKind: GraphQL.Lexer.Token.Kind.openingBrace, startingAt: 62, endingAt: 63),

@@ -6,6 +6,10 @@ final class LexerPunctuationTokenTestCase: XCTestCase {
 		XCTAssertLexing("!", spitsOutPunctuationTokenOfKind: .bang)
 	}
 
+	func testItLexesCommas() {
+		XCTAssertLexing(",", spitsOutPunctuationTokenOfKind: .comma)
+	}
+
 	func testItLexesDollars() {
 		XCTAssertLexing("$", spitsOutPunctuationTokenOfKind: .dollar)
 	}

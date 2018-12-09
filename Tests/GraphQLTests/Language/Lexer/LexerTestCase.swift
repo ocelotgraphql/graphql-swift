@@ -2,28 +2,28 @@ import XCTest
 @testable import GraphQL
 
 final class LexerTestCase: XCTestCase {
-	func testItLexesAComplexQuery() {
-		let query = """
-		{
-			viewer {
-				...SmallUser
-				followers(first: 100) {
-					edges {
-						node {
-							...SmallUser
-						}
+	private let validGraphQLQuery = """
+	{
+		viewer {
+			...SmallUser
+			followers(first: 100) {
+				edges {
+					node {
+						...SmallUser
 					}
 				}
 			}
 		}
+	}
 
-		fragment SmallUser on User {
-			id
-			name
-		}
-		"""
+	fragment SmallUser on User {
+		id
+		name
+	}
+	"""
 
-		XCTAssertLexing(query, spitsOut: [
+	func testItLexesAComplexQuery() {
+		XCTAssertLexing(validGraphQLQuery, spitsOut: [
 			Lexer.Token(ofKind: GraphQL.Lexer.Token.Kind.openingBrace, startingAt: 0, endingAt: 1),
 			Lexer.Token(ofKind: GraphQL.Lexer.Token.Kind.name, startingAt: 3, endingAt: 9, holding: "viewer"),
 			Lexer.Token(ofKind: GraphQL.Lexer.Token.Kind.openingBrace, startingAt: 10, endingAt: 11),

@@ -47,6 +47,7 @@ extension Lexer.Token {
 		case ampersand
 		case openingParenthesis
 		case closingParenthesis
+		case comma
 		case int
 		case float
 		case spread

@@ -231,6 +231,7 @@ private let punctuationTokens: [UInt32: Lexer.Token.Kind] = [
 	38: .ampersand,
 	40: .openingParenthesis,
 	41: .closingParenthesis,
+	44: .comma,
 	46: .spread,
 	58: .colon,
 	61: .equals,

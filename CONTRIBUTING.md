@@ -1,76 +1,66 @@
-# Contributor Covenant Code of Conduct
+# Contributing to GraphQL Swift
 
-## Our Pledge
+First of all, thanks for considering to contribute to **GraphQL Swift**! 🎉🚀🎡
 
-In the interest of fostering an open and welcoming environment, we as
-contributors and maintainers pledge to making participation in our project and
-our community a harassment-free experience for everyone, regardless of age, body
-size, disability, ethnicity, sex characteristics, gender identity and expression,
-level of experience, education, socio-economic status, nationality, personal
-appearance, race, religion, or sexual identity and orientation.
+The goal of this implementation to not follow [Facebook's reference implementation](https://github.com/graphql/graphql-js) blindly, 
+but to write it as "Swifty" as possible.
 
-## Our Standards
+You can help us reach that goal with your contribution. This can be done in several ways:
 
-Examples of behavior that contributes to creating a positive environment
-include:
+- [Report any issues or bugs you discovered](https://github.com/ocelotgraphql/graphql-swift/issues/new)
+- [Open issues for feature requests](https://github.com/ocelotgraphql/graphql-swift/issues/new)
+- [Implement one of our starter tasks](https://github.com/ocelotgraphql/graphql-swift/issues?q=is%3Aopen+is%3Aissue+label%3A%22good+first+issue%22)
 
-* Using welcoming and inclusive language
-* Being respectful of differing viewpoints and experiences
-* Gracefully accepting constructive criticism
-* Focusing on what is best for the community
-* Showing empathy towards other community members
+## Issue prefixes
 
-Examples of unacceptable behavior by participants include:
+Please consider using the following prefixes when creating new issues:
 
-* The use of sexualized language or imagery and unwelcome sexual attention or
-  advances
-* Trolling, insulting/derogatory comments, and personal or political attacks
-* Public or private harassment
-* Publishing others' private information, such as a physical or electronic
-  address, without explicit permission
-* Other conduct which could reasonably be considered inappropriate in a
-  professional setting
+- [Discussion], if you want to discuss a possible new feature.
+- [Wiki], if you discovered a typo or that something's missing in the [Wiki](https://github.com/ocelotgraphql/graphql-swift/wiki).
 
-## Our Responsibilities
+> If no prefix was specified we assume that your issue reports a bug.
 
-Project maintainers are responsible for clarifying the standards of acceptable
-behavior and are expected to take appropriate and fair corrective action in
-response to any instances of unacceptable behavior.
+## Code of Conduct
 
-Project maintainers have the right and responsibility to remove, edit, or
-reject comments, commits, code, wiki edits, issues, and other contributions
-that are not aligned to this Code of Conduct, or to ban temporarily or
-permanently any contributor for other behaviors that they deem inappropriate,
-threatening, offensive, or harmful.
+All contributors are expected to follow our [Code of Conduct](CODE_OF_CONDUCT.md). Please read it carefully before making any contribution 📖.
 
-## Scope
+## Setting up the project for Development
 
-This Code of Conduct applies both within project spaces and in public spaces
-when an individual is representing the project or its community. Examples of
-representing a project or community include using an official project e-mail
-address, posting via an official social media account, or acting as an appointed
-representative at an online or offline event. Representation of a project may be
-further defined and clarified by project maintainers.
+### Install Swift
 
-## Enforcement
+If you haven't installed Swift already, now is the time. This project uses **Swift 4.2**.
 
-Instances of abusive, harassing, or otherwise unacceptable behavior may be
-reported by contacting the project team at ocelot@slashmo.codes. All
-complaints will be reviewed and investigated and will result in a response that
-is deemed necessary and appropriate to the circumstances. The project team is
-obligated to maintain confidentiality with regard to the reporter of an incident.
-Further details of specific enforcement policies may be posted separately.
+### Generate Xcode Project 🏗
 
-Project maintainers who do not follow or enforce the Code of Conduct in good
-faith may face temporary or permanent repercussions as determined by other
-members of the project's leadership.
+Because **GraphQL Swift** is a [Swift PM](https://github.com/apple/swift-package-manager) library, we decided to put the `.xcodeproj` on the `.gitignore`, because maybe not every contributor prefers to use Xcode for writing their Swift code. However, if you do want to work in Xcode, you have to generate a project by running this one-liner in the root directory:
 
-## Attribution
+``` sh
+swift package generate-xcodeproj --enable-code-coverage
+```
 
-This Code of Conduct is adapted from the [Contributor Covenant][homepage], version 1.4,
-available at https://www.contributor-covenant.org/version/1/4/code-of-conduct.html
+> This also enables code coverage reporting for the unit tests.
 
-[homepage]: https://www.contributor-covenant.org
+### Linting 💅
 
-For answers to common questions about this code of conduct, see
-https://www.contributor-covenant.org/faq
+**GraphQL Swift** uses [SwiftLint](https://github.com/realm/SwiftLint) to ensure a consistent code style 🎨. Please install it on your machine and run it before making commits.
+Our continuous integration will also run linting and tell you if something's wrong after you submitted a pull request.
+
+``` bash
+brew install swiftlint
+```
+
+## Testing
+
+### Running tests
+
+We use `XCTest` to write unit tests for the project which you can run in Xcode by pressing `cmd + u` or by simply executing `swift test` inside the root directory.
+
+### Writing tests
+
+You should add tests when adding functionality to existing features or when adding new ones.
+
+## Questions
+
+If you have any questions feel free to [open an issue](https://github.com/ocelotgraphql/graphql-swift/issues/new) where we can discuss further steps.
+
+Thanks again and talk to you soon! 👋

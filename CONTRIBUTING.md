@@ -61,6 +61,6 @@ You should add tests when adding functionality to existing features or when addi
 
 ## Questions
 
-If you have any questions feel free to [open an issue](https://github.com/slashmo/ocelot/issues/new) where we can discuss further steps.
+If you have any questions feel free to [open an issue](https://github.com/ocelotgraphql/graphql-swift/issues/new) where we can discuss further steps.
 
 Thanks again and talk to you soon! 👋
